@@ -3,11 +3,8 @@ if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root" 1>&2
    exit 1
 fi
-apt-get install python-pip python-dev
-pip install zerorpc
-pip install pifacedigitalio
-pip install pyzmq
+apt-get install python-pip python-dev python-virtualenv
 
 # Also possible on raspbian:
-#apt-get install python3-pifacedigitalio
+#apt-get install python{,3}-pifacedigitalio python{,3}-pifacecommon
 
