@@ -38,9 +38,9 @@ key_character_pad_size = {'x': 400, 'y': 400}
 control_button_pad_size = {'x': 400, 'y': 100}
 
 class MyWindow(Gtk.Window):
-	database = zerorpc.Client()
-	database._events.setsockopt(zmq.IPV4ONLY, 0)
-	database.connect("tcp://[::1]:4142")
+	backend = zerorpc.Client()
+	backend._events.setsockopt(zmq.IPV4ONLY, 0)
+	backend.connect("tcp://[::1]:4142")
 
 	def __init__(self):
 		Gtk.Window.__init__(self, title="Hexadecimal Code Lock")
@@ -138,7 +138,7 @@ class MyWindow(Gtk.Window):
 			self.action_button_pad.set_no_show_all(True)
 			self.control_button_pad.set_no_show_all(False)
 		elif widget.get_child().get_text() == "Enter":
-			if self.database.check_access(self.keycode_input):
+			if self.backend.validate(self.keycode_input):
 				self.enable_door_control(self.keycode_input)
 		elif widget.get_child().get_text() == "Clear":
 			self.keycode_input = ""
@@ -162,7 +162,7 @@ class MyWindow(Gtk.Window):
 
 	def server_request(self, request_type, request_data):
 
-		database.validate()
+		backend.validate()
 
 		s = None
 		for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM):
