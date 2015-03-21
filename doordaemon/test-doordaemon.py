@@ -1,9 +1,11 @@
 #!/usr/bin/python
 import zerorpc
+import zmq
 
 print 'Opening door..'
 c = zerorpc.Client()
-c.connect("tcp://127.0.0.1:4143")
+c._events.setsockopt(zmq.IPV4ONLY, 0)
+c.connect("tcp://[::1]:4143")
 c.openDoor()
 print 'done.'
 

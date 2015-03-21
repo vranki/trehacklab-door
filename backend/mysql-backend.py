@@ -35,21 +35,11 @@ import zmq
 import MySQLdb
 import netrc
 
-class DoorControlRPC(object):
-	def __init__(self):
-		self.door = zerorpc.Client()
-		#self.door._events.setsockopt(zmq.IPV6, 1)
-		self.door._events.setsockopt(zmq.IPV4ONLY, 0)
-		self.door.connect("tcp://[::1]:4143")
+from doorbackend import DoorBackend
 
-	def toggle_door_state(self, key):
-		if self.validate(key):
-			self.door.open()
-			print("Keycode '%s' accepted" % (key))
-			return True
-		else:
-			print("Keycode '%s' rejected" % (key))
-		    	return False
+class DoorBackendMySQL(DoorBackend):
+	def __init__(self):
+		DoorBackend.__init__(self)
 
 	def validate(self, key):
 		sql = MySQLdb.connect(
@@ -87,10 +77,6 @@ if __name__ == '__main__':
 	        print("database credentials for '%s' missing" % (databasehost))
 	        exit(2)
 
-	srv = zerorpc.Server(DoorControlRPC())
-	#srv._events.setsockopt(zmq.IPV6, 1)
-	srv._events.setsockopt(zmq.IPV4ONLY, 0)
-	srv.bind("tcp://[::1]:4142")
-	srv.run()
-
+	server = DoorBackendMySQL()
+	server.runServer()
 

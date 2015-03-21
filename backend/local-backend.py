@@ -5,24 +5,17 @@ import os
 import zerorpc
 import zmq
 
+from doorbackend import DoorBackend
+
 if len(sys.argv) < 2:
 	print "Usage: %s [passcodes.txt]" % sys.argv[0]
 	sys.exit()
 
 passcode_file = sys.argv[1]
 
-class TreDoorRPC(object):
-    door = zerorpc.Client()
-    door.connect("tcp://[::1]:4143")
-
-    def tryOpen(self, key):
-
-    	if self.validate(key):
-    		self.door.open()
-
-    		return True
-
-    	return False
+class DoorBackendLocal(DoorBackend):
+    def __init__(self):
+	DoorBackend.__init__(self)
 
     def validate(self, key):
     	key = key.lower()
@@ -36,8 +29,6 @@ class TreDoorRPC(object):
     	return False
 
 if __name__ == '__main__':
-	srv = zerorpc.Server(TreDoorRPC())
-	srv._events.setsockopt(zmq.IPV4ONLY, 0)
-	srv.bind("tcp://[::1]:4142")
-	srv.run()
+	server = DoorBackendLocal()
+	server.runServer()
 
