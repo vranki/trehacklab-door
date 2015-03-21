@@ -24,10 +24,10 @@ class DoorBackendLocal(DoorBackend):
     		line = line.strip().lower()
 
     		if key == line:
-			DoorBackend.validationSuccess("unknown")
+			DoorBackend.validationSuccess(self, "unknown")
     			return "unknown"
 
-	DoorBackend.validationFailed()
+	DoorBackend.validationFailed(self)
     	return None
 
 if __name__ == '__main__':

@@ -27,11 +27,11 @@ class DoorBackend(object):
 	pass
 
 # Must be called if success
-    def valicationSuccess(self, username):
+    def validationSuccess(self, username):
 	print "Validation successful for username " + username
 
 # Must be called if failure
-    def valicationFailed(self):
+    def validationFailed(self):
 	print "Validation failed"
 
     def runServer(self):

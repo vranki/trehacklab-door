@@ -57,10 +57,10 @@ class DoorBackendMySQL(DoorBackend):
 		sql.close()
 
 		if database_query_result:
-			DoorBackend.validationSuccess(database_query_result)
+			DoorBackend.validationSuccess(self, database_query_result)
 			return database_query_result
 		else:
-			DoorBackend.validationFailed()
+			DoorBackend.validationFailed(self)
 			return None
 
 if __name__ == '__main__':
