@@ -1,9 +1,14 @@
 #!/usr/bin/env python2
 # -*- encoding: utf-8 -*-
-import zerorpc
 
-c = zerorpc.Client()
-c.connect("tcp://127.0.0.1:4142")
-print 'a', c.tryOpen("12345")
-print 'b', c.tryOpen("ABCDE")
-print 'c', c.tryOpen("kalak")
+import zerorpc
+import zmq
+
+backend = zerorpc.Client()
+backend._events.setsockopt(zmq.IPV4ONLY, 0)
+backend.connect("tcp://[::1]:4142")
+
+print 'a', backend.tryOpen("123456")
+print 'b', backend.tryOpen("ABCDEF")
+print 'c', backend.tryOpen("")
+

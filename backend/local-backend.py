@@ -24,9 +24,11 @@ class DoorBackendLocal(DoorBackend):
     		line = line.strip().lower()
 
     		if key == line:
-    			return True
+			DoorBackend.validationSuccess("unknown")
+    			return "unknown"
 
-    	return False
+	DoorBackend.validationFailed()
+    	return None
 
 if __name__ == '__main__':
 	server = DoorBackendLocal()

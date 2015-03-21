@@ -56,12 +56,12 @@ class DoorBackendMySQL(DoorBackend):
 		database_query_result = sql_cursor.fetchone()
 		sql.close()
 
-		if not database_query_result:
-			print("No match in database")
-			return False
+		if database_query_result:
+			DoorBackend.validationSuccess(database_query_result)
+			return database_query_result
 		else:
-			print("User: %s" % (database_query_result))
-			return True
+			DoorBackend.validationFailed()
+			return None
 
 if __name__ == '__main__':
 	try:

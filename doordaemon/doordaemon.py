@@ -15,6 +15,7 @@ class DoorDaemon(object):
         self.pifacedigital = pifacedigitalio.PiFaceDigital()
 
     def openDoor(self):
+	print "DoorDaemon opening door"
         self.pifacedigital.relays[0].turn_on()
         time.sleep(1)
         self.pifacedigital.relays[0].turn_off()

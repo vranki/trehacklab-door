@@ -45,5 +45,5 @@ For MySQL connection, edit /home/cosmo/.netrc and write:
 
 machine keycode-mysql login <user> account <database> password <password>
 
-Then run any of the apps. You need at least doordaemon, gui and a backend for a working setup.
+Then run any of the apps. Start (in order): doordaemon, backend and gui for a working setup.
 
