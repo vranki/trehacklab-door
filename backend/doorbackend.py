@@ -12,12 +12,21 @@ class DoorBackend(object):
     	self.door._events.setsockopt(zmq.IPV4ONLY, 0)
     	self.door.connect("tcp://[::1]:4143")
 
+	self.bot = zerorpc.Client()
+    	self.bot._events.setsockopt(zmq.IPV4ONLY, 0)
+    	self.bot.connect("tcp://[::1]:4144")
+
 # Try to open the door with key
     def tryOpen(self, key):
 	result = self.validate(key)
     	if result:
 		print "Opening door for " + result
-   		self.door.open()
+   		self.door.openDoor()
+		try:
+			self.bot.say(result + " avasi pajan oven.")
+		except:
+			print "Bot not alive? Error" + sys.exc_info()[0]
+
     		return True
 
     	return False

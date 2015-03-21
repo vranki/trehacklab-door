@@ -26,16 +26,11 @@ See source code for details.
 Installing
 ==========
 
-The project uses python's virtualenv for dependencies.
-
 apt-get install python-pip python-dev python-virtualenv python-dev libmysqlclient-dev
 
-(in project directory):
-
-virtualenv venv
-source venv/bin/activate
 pip install -r requirements.txt
 
+You could use virtualenv, but getting Gtk to work with it is pain.
 For more info on virtualenv, see http://docs.python-guide.org/en/latest/dev/virtualenvs/
 
 Running

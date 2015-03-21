@@ -22,7 +22,6 @@ from gi.repository import Gtk
 from gi.repository import GObject
 import random
 import time
-import socket
 import zmq
 import zerorpc
 
@@ -138,60 +137,16 @@ class MyWindow(Gtk.Window):
 			self.action_button_pad.set_no_show_all(True)
 			self.control_button_pad.set_no_show_all(False)
 		elif widget.get_child().get_text() == "Enter":
-			if self.backend.validate(self.keycode_input):
-				self.enable_door_control(self.keycode_input)
+			if self.backend.tryOpen(self.keycode_input):
+				self.log_activity("Door opening")
+				self.keycode_input = ""
+				self.counter_button_update()
+			else:
+				self.log_activity("Authentication failure")
+
 		elif widget.get_child().get_text() == "Clear":
 			self.keycode_input = ""
 			self.counter_button_update()
-			#Gtk.main_quit()
-
-	def enable_door_control(self, keycode):
-		self.control_button_pad.set_no_show_all(True)
-		self.action_button_pad.set_no_show_all(False)
-		self.log_activity(keycode, debug=1)
-		#self.log_activity(response[1])
-		#if response == True:
-		#	self.enable_door_control(response[1])
-		#elif response == False:
-		#
-		#	self.log_activity("Authentication failure")
-		#pass
-
-	def toggle_door_state(self, authenticated_user):
-		pass
-
-	def server_request(self, request_type, request_data):
-
-		backend.validate()
-
-		s = None
-		for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM):
-			af, socktype, proto, canonname, sa = res
-			try:
-				s = socket.socket(af, socktype, proto)
-				s.settimeout(4)
-			except socket.error as msg:
-				self.log_activity(str(msg))
-				s = None
-				continue
-			try:
-				s.connect(sa)
-			except socket.error as msg:
-				self.log_activity(str(msg))
-				s.close()
-				s = None
-				continue
-			break
-		if s is not None:
-			try:
-				s.sendall("%s: %s\n" % (request_type, request_data))
-				response = ("OK", s.recv(1024))
-			except socket.timeout:
-				response = ("ERROR", "Socket timeout")
-			s.close()
-			return(response)
-		else:
-			self.log_activity("Socket failed")
 
 	def log_activity(self, message, debug=0):
 		if debug <= DEBUG:

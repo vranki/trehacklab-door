@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python2
 # -*- encoding: utf-8 -*-
 #
 # ZeroRPC service which can open the door with piface
