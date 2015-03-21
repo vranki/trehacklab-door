@@ -8,6 +8,7 @@
 import time
 import pifacedigitalio
 import zerorpc
+import zmq
 
 class DoorDaemon(object):
     def __init__(self):
@@ -19,6 +20,7 @@ class DoorDaemon(object):
         self.pifacedigital.relays[0].turn_off()
 
 s = zerorpc.Server(DoorDaemon())
+s._events.setsockopt(zmq.IPV4ONLY, 0)
 s.bind("tcp://[::1]:4143")
 s.run()
 

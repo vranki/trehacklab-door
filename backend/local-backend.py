@@ -3,6 +3,7 @@
 import sys
 import os
 import zerorpc
+import zmq
 
 if len(sys.argv) < 2:
 	print "Usage: %s [passcodes.txt]" % sys.argv[0]
@@ -12,7 +13,7 @@ passcode_file = sys.argv[1]
 
 class TreDoorRPC(object):
     door = zerorpc.Client()
-    door.connect("tcp://127.0.0.1:4143")
+    door.connect("tcp://[::1]:4143")
 
     def tryOpen(self, key):
 
@@ -36,6 +37,7 @@ class TreDoorRPC(object):
 
 if __name__ == '__main__':
 	srv = zerorpc.Server(TreDoorRPC())
-	srv.bind("tcp://0.0.0.0:4142")
+	srv._events.setsockopt(zmq.IPV4ONLY, 0)
+	srv.bind("tcp://[::1]:4142")
 	srv.run()
 
