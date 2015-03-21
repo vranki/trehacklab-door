@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+# -*- encoding: utf-8 -*-
 import sys
 import os
 import zerorpc
@@ -36,3 +38,4 @@ if __name__ == '__main__':
 	srv = zerorpc.Server(TreDoorRPC())
 	srv.bind("tcp://0.0.0.0:4142")
 	srv.run()
+

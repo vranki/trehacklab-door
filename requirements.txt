@@ -5,3 +5,5 @@ pifacedigitalio==3.0.5
 pyzmq==13.1.0
 wsgiref==0.1.2
 zerorpc==0.4.4
+MySQL-python==1.2.5
+

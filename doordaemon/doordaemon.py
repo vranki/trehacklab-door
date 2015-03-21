@@ -1,4 +1,10 @@
 #!/usr/bin/python
+# -*- encoding: utf-8 -*-
+#
+# ZeroRPC service which can open the door with piface
+# Binds to localhost port 4143
+#
+
 import time
 import pifacedigitalio
 import zerorpc
@@ -13,6 +19,6 @@ class DoorDaemon(object):
         self.pifacedigital.relays[0].turn_off()
 
 s = zerorpc.Server(DoorDaemon())
-s.bind("tcp://127.0.0.1:4143")
+s.bind("tcp://[::1]:4143")
 s.run()
 
