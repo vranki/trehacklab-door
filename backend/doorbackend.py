@@ -2,7 +2,7 @@
 
 import zerorpc
 import zmq
-
+import sys
 
 # Common base class for door backends
 
